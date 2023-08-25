@@ -1,0 +1,195 @@
+openapi : 3.0.0
+
+info :
+  title: internet banking app
+  version : 1.0.0
+  description : practice REST API
+servers :
+  - url : http://localhost:3000/
+    description: development server
+components:
+  securitySchemes:
+    bearer:
+      type: http    
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Bearer with JWT Token'
+paths:
+  /auth/register:
+    post :
+      summary: New User Registration
+      requestBody :
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  pattern: "^[a-zA-Z0-9]+$"
+                  minLength: 8
+                  maxLength: 20
+                  required:
+                    - password
+                    - pattern
+                role:
+                  type: string
+                  default: maker
+                  enum:
+                    - maker
+                    - admin
+                    - approval
+                  required:
+                    - role
+      responses :
+        '200':
+          description : user created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                      role:
+                        type: string
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /auth/login:
+    post :
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  pattern: "^[a-zA-Z0-9]+$"
+                  minLength: 8
+                  maxLength: 20
+                  required:
+                    - password
+      responses:
+        "200":
+          description: successful login
+          content :
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: string
+        "400":
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /transfer/all:
+    get:
+      security:
+        - bearer: []
+      summary: get all transfer list
+      responses:
+        "200":
+          description: get all transfer list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      bank: 
+                        type: string
+                      accountNumber:
+                        type: number
+                      name:
+                        type: string
+                      amount:
+                        type: number
+  /transfer/create:
+    post:
+      security:
+        - bearer: []
+      summary: create transfer list transfer
+      requestBody :
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bank:
+                  type: string
+                accountNumber:
+                  type: number
+                name:
+                  type: string
+                amount:
+                  type: number
+                status:
+                  type: string
+                  enum:
+                    - pending
+                  default: pending
+                  required:
+                    - status
+      responses :
+        '200':
+          description : transfer created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                      role:
+                        type: string
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
