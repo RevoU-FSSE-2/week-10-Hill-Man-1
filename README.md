@@ -1,1 +1,14 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/zrfmWHEN)
+# SIMPLE INTERNET BANKING API
+
+## Tech Stack
+
+- **Node.js** - JavaScript runtime environment.
+- **Express.js** - Web application framework for Node.js.
+- **MongoDB** - NoSQL database.
+- **Mongoose** - ODM for MongoDB and Node.js.
+- **JWT** - For authentication and authorization.
+- **Bcrypt** - For password hashing.
+
+I employ **Swagger** for comprehensive API documentation detailing endpoints, validation, and usage instructions. Access the documentation at `/api-docs` on the running server.
+
+
